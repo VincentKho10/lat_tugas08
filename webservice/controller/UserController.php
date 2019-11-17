@@ -56,22 +56,48 @@ class UserController
     }
 
     public function login(){
-        $login = filter_input(0,"btnLogin");
-        if(isset($login)){
-            $uname = filter_input(0,"Uname");
-            $pass = filter_input(0,"Pass");
-            $usr = new User();
-            $usr->setUsername($uname);
-            $usr->setPassword($pass);
-            $ulogged = $this->userDao->loginUser($usr);
-            if($ulogged != false){
-                /* @var User $ulogged*/
-                $_SESSION["logged_as"] = $ulogged[0]->getRole()->getName();
-                $_SESSION["loggedin"] = true;
-                header('location:index.php');
-            }
-        }
 
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "localhost\pw2-assignment08-20191-VincentKho10\webservice\service\user\Login.php",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => "------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"btnLogin\"\r\n\r\ntrue\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"Pass\"\r\n\r\n12345\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"Uname\"\r\n\r\nadmin\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW--",
+            CURLOPT_HTTPHEADER => array(
+                "Accept: */*",
+                "Accept-Encoding: gzip, deflate",
+                "Cache-Control: no-cache",
+                "Connection: keep-alive",
+                "Content-Length: 384",
+                "Content-Type: application/json",
+                "Cookie: PHPSESSID=dkii9gk77iu2m1ee6vptcq3jog",
+                "Host: localhost",
+                "Postman-Token: d9344d88-3854-4d06-8cbe-8fd82e207b2b,7bfc0e5b-25de-42a0-98bf-2d4145d8279a",
+                "User-Agent: PostmanRuntime/7.19.0",
+                "cache-control: no-cache",
+                "content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW"
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            echo $response;
+            $_SESSION["logged_as"] = $response->getRole()->getName();
+            $_SESSION["loggedin"] = true;
+            header('location:index.php');
+        }
         include_once "view/login.php";
     }
 

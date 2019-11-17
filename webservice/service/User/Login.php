@@ -16,9 +16,9 @@ if(isset($login)) {
     $User = $usrd->loginUser($usr);
     if (!empty($User)) {
         echo json_encode(array(
-            "Id" => $User->getId(),
-            "Name" => $User->getName(),
-            "Role" => $User->getRole()->getName()
+            "Id" => $User[0]->getId(),
+            "Name" => $User[0]->getName(),
+            "Role" => $User[0]->getRole()->getName()
             )
         );
     } else {
