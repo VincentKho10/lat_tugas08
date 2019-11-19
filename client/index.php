@@ -1,17 +1,8 @@
 <?php
-include_once "db_function/InsuranceDao.php";
-include_once "db_function/PatientDao.php";
-include_once "db_function/UserDao.php";
-include_once "db_function/RoleDao.php";
 include_once "controller/InsuranceController.php";
 include_once "controller/UserController.php";
 include_once "controller/PatientController.php";
 include_once "controller/RoleController.php";
-include_once "Entity/Insurance.php";
-include_once "Entity/Patient.php";
-include_once "Entity/Role.php";
-include_once "Entity/User.php";
-include_once "Util/DBHelper.php";
 
 session_start();
 

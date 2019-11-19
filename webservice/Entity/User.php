@@ -1,5 +1,5 @@
 <?php
-
+include_once "Role.php";
 
 class User
 {
